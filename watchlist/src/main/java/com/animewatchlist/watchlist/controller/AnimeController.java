@@ -35,5 +35,10 @@ public class AnimeController {
         animeService.deleteAnime(id);
     }
 
+    @PutMapping("/anime/{id}")
+    public Anime updateAnime(@PathVariable int id, @RequestBody Anime anime){
+        return animeService.updateAnime(id, anime);
+    }
+
 
 }

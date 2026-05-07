@@ -38,5 +38,22 @@ public class AnimeServiceImpl implements AnimeService{
         return anime.orElseThrow(() -> new RuntimeException("Anime does not exist with id: " +id));
     }
 
+        @Override
+        public Anime updateAnime(int id, Anime updateAnime) {
+            Anime existingAnime = animeRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Anime not found for id: "+ id));
+
+            existingAnime.setTitle(updateAnime.getTitle());
+            existingAnime.setEpisodes(updateAnime.getEpisodes());
+            existingAnime.setGenre(updateAnime.getGenre());
+            existingAnime.setStatus(updateAnime.getStatus());
+            existingAnime.setRating(updateAnime.getRating());
+            existingAnime.setNotes(updateAnime.getNotes());
+            existingAnime.setUserId(updateAnime.getUserId());
+            return animeRepository.save(existingAnime);
+
+
+        }
+
 
 }
