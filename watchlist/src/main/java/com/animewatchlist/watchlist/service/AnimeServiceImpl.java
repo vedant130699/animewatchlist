@@ -1,6 +1,7 @@
 package com.animewatchlist.watchlist.service;
 
 import com.animewatchlist.watchlist.model.Anime;
+import com.animewatchlist.watchlist.model.STATUS;
 import com.animewatchlist.watchlist.repository.AnimeRepository;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,26 @@ public class AnimeServiceImpl implements AnimeService{
 
 
         }
+
+    @Override
+    public List<Anime> addBulkAnime(List<Anime> anime) {
+        return animeRepository.saveAll(anime);
+    }
+
+    @Override
+    public List<Anime> getAllAnimeByUserId(int userId) {
+        return  animeRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Anime> getAnimeByStatus(STATUS status) {
+        return animeRepository.findAllByStatus(status);
+    }
+
+    @Override
+    public List<Anime> getAnimeByGenre(String genre) {
+        return animeRepository.findByGenreIgnoreCase(genre);
+    }
 
 
 }
