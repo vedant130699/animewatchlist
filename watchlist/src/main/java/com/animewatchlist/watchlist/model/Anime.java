@@ -1,9 +1,6 @@
 package com.animewatchlist.watchlist.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -15,8 +12,9 @@ public class Anime {
     private String title;
     private String genre;
     private int episodes;
+    @Enumerated(EnumType.STRING)
     private STATUS status;
     private int rating;
     private String notes;
-    private int user_id;
+    private int userId;
 }

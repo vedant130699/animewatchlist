@@ -14,4 +14,6 @@ public interface AnimeService {
     void deleteAnime(int id);
 
     Anime getAnimeById(int id);
+
+    Anime updateAnime(int id, Anime anime);
 }
