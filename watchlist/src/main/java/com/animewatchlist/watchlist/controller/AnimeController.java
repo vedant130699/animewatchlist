@@ -1,6 +1,7 @@
 package com.animewatchlist.watchlist.controller;
 
 import com.animewatchlist.watchlist.model.Anime;
+import com.animewatchlist.watchlist.dto.AnimeDTO;
 import com.animewatchlist.watchlist.model.STATUS;
 import com.animewatchlist.watchlist.service.AnimeService;
 import org.springframework.web.bind.annotation.*;
@@ -17,37 +18,37 @@ public class AnimeController {
         this.animeService = animeService;
     }
     @GetMapping("/anime")
-    public List<Anime> getAnime(){
+    public List<AnimeDTO> getAnime(){
         return animeService.getAllAnime();
     }
 
-    @GetMapping("anime/{id}")
-    public Anime getAnimeById(@PathVariable int id){
+    @GetMapping("/anime/{id}")
+    public AnimeDTO getAnimeById(@PathVariable int id){
         return animeService.getAnimeById(id);
     }
 
     @GetMapping("/anime/userId/{userId}")
-    public List<Anime> getAnimeByUserId(@PathVariable int userId){
+    public List<AnimeDTO> getAnimeByUserId(@PathVariable int userId){
         return animeService.getAllAnimeByUserId(userId);
     }
 
     @GetMapping("/anime/status/{status}")
-    public List<Anime> getAnimeByStatus(@PathVariable STATUS status){
+    public List<AnimeDTO> getAnimeByStatus(@PathVariable STATUS status){
         return animeService.getAnimeByStatus(status);
     }
     @GetMapping("/anime/genre/{genre}")
-    public List<Anime> getAnimeByGenre(@PathVariable String genre){
+    public List<AnimeDTO> getAnimeByGenre(@PathVariable String genre){
         return animeService.getAnimeByGenre(genre);
     }
 
 
     @PostMapping("/anime")
-    public Anime postAnime(@RequestBody Anime anime){
+    public AnimeDTO postAnime(@RequestBody Anime anime){
         return animeService.addAnime(anime);
     }
 
-    @PostMapping("/bulkAnime")
-    public List<Anime> addBulkAnime(@RequestBody List<Anime> anime){
+    @PostMapping("/anime/bulk")
+    public List<AnimeDTO> addBulkAnime(@RequestBody List<Anime> anime){
         return animeService.addBulkAnime(anime);
     }
 
@@ -57,7 +58,7 @@ public class AnimeController {
     }
 
     @PutMapping("/anime/{id}")
-    public Anime updateAnime(@PathVariable int id, @RequestBody Anime anime){
+    public AnimeDTO updateAnime(@PathVariable int id, @RequestBody Anime anime){
         return animeService.updateAnime(id, anime);
     }
 

@@ -1,12 +1,12 @@
 package com.animewatchlist.watchlist.service;
 
 import com.animewatchlist.watchlist.model.Anime;
+import com.animewatchlist.watchlist.dto.AnimeDTO;
 import com.animewatchlist.watchlist.model.STATUS;
 import com.animewatchlist.watchlist.repository.AnimeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnimeServiceImpl implements AnimeService{
@@ -17,14 +17,26 @@ public class AnimeServiceImpl implements AnimeService{
         this.animeRepository = animeRepository;
     }
 
-    @Override
-    public List<Anime> getAllAnime() {
-        return animeRepository.findAll();
+    private AnimeDTO convertToDTO(Anime anime){
+        AnimeDTO dto = new AnimeDTO();
+        dto.setId(anime.getId());
+        dto.setTitle(anime.getTitle());
+        dto.setStatus(anime.getStatus());
+
+        return dto;
     }
 
     @Override
-    public Anime addAnime(Anime anime) {
-        return animeRepository.save(anime);
+    public List<AnimeDTO> getAllAnime() {
+        return animeRepository.findAll()
+                .stream().map(this::convertToDTO)
+                .toList();
+    }
+
+    @Override
+    public AnimeDTO addAnime(Anime anime) {
+        Anime anime1 =  animeRepository.save(anime);
+        return convertToDTO(anime1);
     }
 
     @Override
@@ -34,13 +46,13 @@ public class AnimeServiceImpl implements AnimeService{
     }
 
     @Override
-    public Anime getAnimeById(int id) {
-        Optional<Anime> anime = animeRepository.findById(id);
-        return anime.orElseThrow(() -> new RuntimeException("Anime does not exist with id: " +id));
+    public AnimeDTO getAnimeById(int id) {
+        Anime anime = animeRepository.findById(id).orElseThrow(() -> new RuntimeException("Anime does not exist with id: " +id));;
+        return convertToDTO(anime);
     }
 
         @Override
-        public Anime updateAnime(int id, Anime updateAnime) {
+        public AnimeDTO updateAnime(int id, Anime updateAnime) {
             Anime existingAnime = animeRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Anime not found for id: "+ id));
 
@@ -51,29 +63,34 @@ public class AnimeServiceImpl implements AnimeService{
             existingAnime.setRating(updateAnime.getRating());
             existingAnime.setNotes(updateAnime.getNotes());
             existingAnime.setUserId(updateAnime.getUserId());
-            return animeRepository.save(existingAnime);
+            Anime updatedAnime = animeRepository.save(existingAnime);
+            return convertToDTO(updatedAnime);
 
 
         }
 
     @Override
-    public List<Anime> addBulkAnime(List<Anime> anime) {
-        return animeRepository.saveAll(anime);
+    public List<AnimeDTO> addBulkAnime(List<Anime> anime) {
+        List<Anime> allAnime =  animeRepository.saveAll(anime);
+        return allAnime.stream().map(this::convertToDTO).toList();
     }
 
     @Override
-    public List<Anime> getAllAnimeByUserId(int userId) {
-        return  animeRepository.findByUserId(userId);
+    public List<AnimeDTO> getAllAnimeByUserId(int userId) {
+        List<Anime> anime =  animeRepository.findByUserId(userId);
+        return anime.stream().map(this::convertToDTO).toList();
     }
 
     @Override
-    public List<Anime> getAnimeByStatus(STATUS status) {
-        return animeRepository.findAllByStatus(status);
+    public List<AnimeDTO> getAnimeByStatus(STATUS status) {
+        List<Anime> anime =  animeRepository.findAllByStatus(status);
+        return anime.stream().map(this::convertToDTO).toList();
     }
 
     @Override
-    public List<Anime> getAnimeByGenre(String genre) {
-        return animeRepository.findByGenreIgnoreCase(genre);
+    public List<AnimeDTO> getAnimeByGenre(String genre) {
+        List<Anime> anime =  animeRepository.findByGenreIgnoreCase(genre);
+        return anime.stream().map(this::convertToDTO).toList();
     }
 
 

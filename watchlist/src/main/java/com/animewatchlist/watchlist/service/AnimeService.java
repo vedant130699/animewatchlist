@@ -1,6 +1,7 @@
 package com.animewatchlist.watchlist.service;
 
 import com.animewatchlist.watchlist.model.Anime;
+import com.animewatchlist.watchlist.dto.AnimeDTO;
 import com.animewatchlist.watchlist.model.STATUS;
 
 import java.util.List;
@@ -8,21 +9,21 @@ import java.util.List;
 
 public interface AnimeService {
 
-    List<Anime> getAllAnime();
+    List<AnimeDTO> getAllAnime();
 
-    Anime addAnime(Anime anime);
+    AnimeDTO addAnime(Anime anime);
 
     void deleteAnime(int id);
 
-    Anime getAnimeById(int id);
+    AnimeDTO getAnimeById(int id);
 
-    Anime updateAnime(int id, Anime anime);
+    AnimeDTO updateAnime(int id, Anime anime);
 
-    List<Anime> addBulkAnime(List<Anime> anime);
+    List<AnimeDTO> addBulkAnime(List<Anime> anime);
 
-    List<Anime> getAllAnimeByUserId(int userId);
+    List<AnimeDTO> getAllAnimeByUserId(int userId);
 
-    List<Anime> getAnimeByStatus(STATUS status);
+    List<AnimeDTO> getAnimeByStatus(STATUS status);
 
-    List<Anime> getAnimeByGenre(String genre);
+    List<AnimeDTO> getAnimeByGenre(String genre);
 }
