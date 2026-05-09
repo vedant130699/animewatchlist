@@ -17,7 +17,7 @@ public class AnimeServiceImpl implements AnimeService{
         this.animeRepository = animeRepository;
     }
 
-    private AnimeDTO convertToDTO(Anime anime){
+    public AnimeDTO convertToDTO(Anime anime){
         AnimeDTO dto = new AnimeDTO();
         dto.setId(anime.getId());
         dto.setTitle(anime.getTitle());
